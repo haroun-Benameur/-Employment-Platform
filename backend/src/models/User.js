@@ -10,6 +10,8 @@ const userSchema = new mongoose.Schema(
 		title: { type: String },
 		skills: { type: [String], default: [] },
 		about: { type: String },
+		resetPasswordToken: { type: String },
+		resetPasswordExpires: { type: Date },
 	},
 	{ timestamps: true }
 );

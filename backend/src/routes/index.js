@@ -2,7 +2,7 @@ const express = require('express');
 const { validate } = require('../middleware/validate');
 const { authenticate, requireRole } = require('../middleware/auth');
 
-const { register, login, me, registerValidators, loginValidators } = require('../controllers/authController');
+const { register, login, me, registerValidators, loginValidators, forgotPassword, forgotValidators, resetPasswordController, resetValidators } = require('../controllers/authController');
 const { getMe, updateMe, updateValidators, list, listValidators } = require('../controllers/userController');
 const jobController = require('../controllers/jobController');
 const applicationController = require('../controllers/applicationController');
@@ -13,6 +13,8 @@ const router = express.Router();
 router.post('/auth/register', registerValidators, validate, register);
 router.post('/auth/login', loginValidators, validate, login);
 router.get('/auth/me', authenticate, me);
+router.post('/auth/forgot-password', forgotValidators, validate, forgotPassword);
+router.post('/auth/reset-password', resetValidators, validate, resetPasswordController);
 
 // Users
 router.get('/users', listValidators, validate, list);

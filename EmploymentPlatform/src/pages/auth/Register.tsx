@@ -141,7 +141,7 @@ const Register = () => {
                     />
                   </div>
                 )}
-                <Button type="submit" className="w-full bg-hiresphere-primary hover:bg-hiresphere-secondary" disabled={isLoading}>
+                <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? "Creating account..." : "Create account"}
                 </Button>
               </form>
@@ -149,7 +149,7 @@ const Register = () => {
             <CardFooter className="flex justify-center">
               <div className="text-sm text-muted-foreground">
                 Already have an account?{" "}
-                <Link to="/login" className="text-hiresphere-primary hover:underline">
+                <Link to="/login" className="text-primary hover:underline">
                   Sign in
                 </Link>
               </div>

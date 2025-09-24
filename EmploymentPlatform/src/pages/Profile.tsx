@@ -191,7 +191,6 @@ const Profile = () => {
               <div className="flex justify-end">
                 <Button
                   type="submit"
-                  className="bg-hiresphere-primary hover:bg-hiresphere-secondary"
                   disabled={isSaving}
                 >
                   {isSaving ? "Saving..." : "Save Changes"}

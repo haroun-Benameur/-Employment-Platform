@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const User = require('../models/User');
 const { signJwt } = require('../utils/jwt');
 
@@ -32,4 +33,32 @@ async function loginUser({ email, password }) {
 	return { user: user.toPublicJSON(), token };
 }
 
-module.exports = { registerUser, loginUser };
+async function createResetToken(email) {
+	const user = await User.findOne({ email });
+	if (!user) {
+		// Do not reveal account existence
+		return { ok: true };
+	}
+	const token = crypto.randomBytes(24).toString('hex');
+	const expires = new Date(Date.now() + 1000 * 60 * 30); // 30 minutes
+	user.resetPasswordToken = token;
+	user.resetPasswordExpires = expires;
+	await user.save();
+	return { ok: true, token }; // In real app, email this token
+}
+
+async function resetPassword(token, newPassword) {
+	const user = await User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: new Date() } });
+	if (!user) {
+		const err = new Error('Invalid or expired token');
+		err.status = 400;
+		throw err;
+	}
+	user.passwordHash = await bcrypt.hash(newPassword, 10);
+	user.resetPasswordToken = undefined;
+	user.resetPasswordExpires = undefined;
+	await user.save();
+	return { ok: true };
+}
+
+module.exports = { registerUser, loginUser, createResetToken, resetPassword };

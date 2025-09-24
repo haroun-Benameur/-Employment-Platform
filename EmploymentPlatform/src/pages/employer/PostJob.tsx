@@ -239,7 +239,6 @@ CSS/Tailwind skills"
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-hiresphere-primary hover:bg-hiresphere-secondary"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Posting..." : "Post Job"}
